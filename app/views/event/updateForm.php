@@ -101,7 +101,6 @@ if ($_SESSION["user_id"]<=0){
     
     
 
-    die(var_dump($id_owner == $user_id));
     // read current record's data
     try {
         // prepare select query

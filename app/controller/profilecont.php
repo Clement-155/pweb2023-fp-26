@@ -52,7 +52,7 @@ if(isset($_POST['register'])){
         die('ERROR: ' . $exception->getMessage());
     }
 }
-if(isset($_POST['login'])){
+else if(isset($_POST['login'])){
     include 'config.php';
  
     try{
@@ -89,7 +89,7 @@ if(isset($_POST['login'])){
         die('ERROR: ' . $exception->getMessage());
     }
 }
-if(isset($_POST['updateprofile'])){
+else if(isset($_POST['updateprofile'])){
     include 'config.php';
     try{
         require_once 'registercont.php';
@@ -156,7 +156,7 @@ if(isset($_POST['updateprofile'])){
         die('ERROR: ' . $exception->getMessage());
     }
 }
-if(isset($_POST['deleteprofile'])){
+else if(isset($_POST['deleteprofile'])){
     include 'config.php';
     try{
         require_once 'sessionauth.php';

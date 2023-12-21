@@ -10,9 +10,7 @@ if($_POST){
     // include database connection
     include './config.php';
     try{
-        // insert query
-
-
+        $id=isset($_POST['id']) ? $_POST['id'] : die('ERROR: Record ID not found.');
         $query = "UPDATE event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan WHERE id = :id";
         
         // prepare query for execution
@@ -45,6 +43,7 @@ if($_POST){
         // $created=date('Y-m-d H:i:s');
         // $stmt->bindParam(':created', $created);
         // Execute the query
+
         if($stmt->execute()){
             header("Location: ../views/event/index.php", true, 301);
 
