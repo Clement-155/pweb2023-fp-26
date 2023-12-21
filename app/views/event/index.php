@@ -95,7 +95,7 @@
             include '../../controller/config.php';
             // delete message prompt will be here
             // select all data
-            $query = "SELECT nama_event, tanggal_akhir, deskripsi, total_vote FROM event ORDER BY tanggal_akhir DESC";
+            $query = "SELECT id, nama_event, tanggal_akhir, deskripsi, total_vote FROM event ORDER BY tanggal_akhir DESC";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
             // this is how to get number of rows returned
@@ -140,11 +140,16 @@
                     extract($row);
 
                     echo "<tr>
-                        <td >{$nama_event}</td>
+                        <td style=\"word-wrap: break-word;min-width: 10vw;max-width: 10vw;\">{$nama_event}</td>
                         <td >{$tanggal_akhir}</td>
-                        <td style=\"word-wrap: break-word;min-width: 160px;max-width: 160px;\">{$deskripsi}</td>
+                        <td style=\"word-wrap: break-word;min-width: 20vw;max-width: 15vw;\">{$deskripsi}</td>
                         <td >{$total_vote}</td>
-                        <td ></td>
+                        <td >
+                            <div class=\"row row-cols-1\">
+                                <a class=\"btn btn-warning m-4 w-50\" href=\"./updateForm.php?id={$id}\" role=\"button\">EDIT</a>
+                                <a class=\"btn btn-danger m-4 w-50\" href=\"./delete.php?id={$id}\" role=\"button\">DELETE</a>
+                            </div>
+                        </td>
                     </tr>";
                 }
             }
@@ -165,14 +170,14 @@
     <footer id="footer">
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>Amoeba</span></strong>. All Rights Reserved
+                <strong><span>Kuliah Pemrograman Web Jurusan Teknik Informatika ITS (2023)</span></strong>
             </div>
             <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-one-page-bootstrap-template-amoeba/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    Dosen: Imam Kuswardayan, S.Kom, M.T
             </div>
         </div>
     </footer><!-- End #footer -->
