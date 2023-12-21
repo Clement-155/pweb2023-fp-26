@@ -27,6 +27,17 @@
     <!-- Template Main CSS File -->
     <link href="../../../assets/css/style.css?<?php echo time(); ?>" rel="stylesheet">
 
+    <script type='text/javascript'>
+    // confirm record deletion
+    function delete_event( id ){
+        var answer = confirm('Are you sure?');
+        if (answer){
+            // if user clicked ok,
+            // pass the id to delete.php and execute the delete query
+            window.location = '../../controller/eventDelete.php?id=' + id;
+        }
+    }
+    </script>
     <!-- =======================================================
   * Template Name: Amoeba
   * Updated: Sep 18 2023 with Bootstrap v5.3.2
@@ -43,7 +54,7 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Amoeba</a></h1>
+                <h1><a href="index.php">Amoeba</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -101,13 +112,7 @@
             // this is how to get number of rows returned
             $num = $stmt->rowCount();
             // link to create record form
-            //check if more than 0 record found
-            if($num<=0){
-                // data from database will be here
-            }
-            // if no records found
-            else
-            {
+
                 
             
         ?>
@@ -147,12 +152,12 @@
                         <td >
                             <div class=\"row row-cols-1\">
                                 <a class=\"btn btn-warning m-4 w-50\" href=\"./updateForm.php?id={$id}\" role=\"button\">EDIT</a>
-                                <a class=\"btn btn-danger m-4 w-50\" href=\"./delete.php?id={$id}\" role=\"button\">DELETE</a>
+                                <a class=\"btn btn-danger m-4 w-50\" href=\"javascript:delete_event({$id})\" role=\"button\">DELETE</a>
                             </div>
                         </td>
                     </tr>";
                 }
-            }
+            
         ?>
                                 </tbody>
                             </table>
@@ -200,6 +205,7 @@
     <script src="../../../assets/js/main.js?<?php echo time(); ?>"></script>
     <script src="../../../assets/js/table.js?<?php echo time(); ?>"></script>
     
+
 
 </body>
 

@@ -42,7 +42,7 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Amoeba</a></h1>
+                <h1><a href="index.php">Amoeba</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -122,7 +122,7 @@
         <div class="container-fluid px-1 py-5 mx-auto">
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-                    <h3>Tambah Event Baru</h3>
+                    <h3>Edit Event</h3>
                     <div class="card">
                         <form class="form-card" action="../../controller/eventUpdate.php" method="post"">
                             <input value=<?php echo $id ?> type="text" name="id" hidden required>
