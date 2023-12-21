@@ -43,10 +43,9 @@ if ($_SESSION["user_id"]<=0){
             $stmt->execute();
 
             // Log voting in table
-            $query = "INSERT INTO event_user SET event_id=:event_id, user_id=:user_id";
-            $stmt->bindParam(':event_id', $id);
-            $stmt->bindParam(':user_id', $_SESSION["user_id"]);
 
+            
+            
             if($stmt->execute()){
                 header("Location: ../views/event/index.php", true, 301);
     

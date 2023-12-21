@@ -7,6 +7,25 @@ require_once '../../controller/sessionauth.php';
 if ($_SESSION["user_id"]<=0){
     header("Location: ../profile/login.php");
 }
+    
+    //include database connection
+    include '../../controller/config.php';
+    $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+    //Check if user is owner of file
+    $user_id = $_SESSION["user_id"];
+    $query = "SELECT id_user FROM event WHERE id = ?";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(1, $id);
+    // execute our query
+    $stmt->execute();
+    // store retrieved row to a variable
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $id_owner = $row['id_user'];
+
+    $id_owner == $user_id ? : die('ERROR : INVALID USER');
+
 ?>
 
 <head>
@@ -79,9 +98,10 @@ if ($_SESSION["user_id"]<=0){
 <?php
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
-    $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
-    //include database connection
-    include '../../controller/config.php';
+    
+    
+
+    die(var_dump($id_owner == $user_id));
     // read current record's data
     try {
         // prepare select query
