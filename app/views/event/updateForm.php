@@ -22,10 +22,9 @@
     <link href="../../../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="../../../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-
     <!-- Template Main CSS File -->
     <link href="../../../assets/css/style.css?<?php echo time(); ?>" rel="stylesheet">
+    <link href="../../../assets/css/form.css?<?php echo time(); ?>" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: Amoeba
@@ -89,75 +88,49 @@
     </section><!-- #hero -->
 
     <main id="main">
-        <!-- PHP START - Get ALL data from database -->
-        <?php
-            // include database connection
-            include '../../controller/config.php';
-            // delete message prompt will be here
-            // select all data
-            $query = "SELECT nama_event, tanggal_akhir, deskripsi, total_vote FROM event ORDER BY tanggal_akhir DESC";
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            // this is how to get number of rows returned
-            $num = $stmt->rowCount();
-            // link to create record form
-            //check if more than 0 record found
-            if($num<=0){
-                // data from database will be here
-            }
-            // if no records found
-            else
-            {
-                
-            
-        ?>
-        <!-- PHP END -->
 
-        <div class="row py-5">
-            <div class="col-lg-10 mx-auto">
-                <div class="card rounded shadow border-0">
-                    <div class="card-body p-5 bg-white rounded">
-                        <div class="table-responsive w-80">
-                        <a class="btn btn-primary m-4" href="./inputForm.php" role="button">ADD NEW</a>
-                            <table id="example" style="width:100%" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Event</th>
-                                        <th>Tanggal Akhir</th>
-                                        <th>Deskripsi</th>
-                                        <th>Total Voter</th>
-                                        <th>Options</th>
+        <div class="container-fluid px-1 py-5 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                    <h3>Tambah Event Baru</h3>
+                    <div class="card">
+                        <form class="form-card" action="../../controller/eventCreate.php" method="post"">
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Judul Event<span class="text-danger" > *</span></label>
+                                     <input type="text" id="judul" name="judul" placeholder="Ulang Tahunku" onblur="validate(1)" required> 
+                                    </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Tanggal Berakhir<span class="text-danger"> *</span></label>
+                                    <input type="datetime-local" id="tanggal_akhir" name="tanggal_akhir" required> 
+                                </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label mt-4">Deskripsi Event</label><span class="text-danger"> *</span>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="deskripsi" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 1<span class="text-danger"> *</span></label> <input type="text" id="pilihan_1" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 2<span class="text-danger"> *</span></label> <input type="text" id="pilihan_2" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 3</label> <input type="text" id="pilihan_3" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 4</label> <input type="text" id="pilihan_4" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
+                            </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-        <?php 
-             
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    // extract row
-                    // this will make $row['firstname'] to
-                    // just $firstname only
-                    extract($row);
-
-                    echo "<tr>
-                        <td >{$nama_event}</td>
-                        <td >{$tanggal_akhir}</td>
-                        <td style=\"word-wrap: break-word;min-width: 160px;max-width: 160px;\">{$deskripsi}</td>
-                        <td >{$total_vote}</td>
-                        <td ></td>
-                    </tr>";
-                }
-            }
-        ?>
-                                </tbody>
-                            </table>
-                            
-                        </div>
+                            <div class="row justify-content-end">
+                                <div class="form-group col-sm-4">
+                                     <button type="submit" class="btn btn-primary">Buat Event Baru</button> 
+                                     <a class="btn btn-secondary" href="./index.php" role="button">Back</a> 
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
 
     </main><!-- End #main -->
 
@@ -186,15 +159,8 @@
     <script src="../../../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
     <!-- Template Main JS File -->
-
     <script src="../../../assets/js/main.js?<?php echo time(); ?>"></script>
-    <script src="../../../assets/js/table.js?<?php echo time(); ?>"></script>
-    
 
 </body>
 
