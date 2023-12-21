@@ -15,19 +15,19 @@ if(isset($_POST['register'])){
         elseif(isemailvalid($email)){
             echo "<div class='alert alert-danger'>email invalid.</div>";
         }
-        elseif(isusrtaken(object $pdo, string $username)){
+        elseif(isusrtaken($pdo, $username)){
             echo "<div class='alert alert-danger'>Username Taken.</div>";
         }
-        elseif(isemailtaken(object $pdo, string $email)){
+        elseif(isemailtaken($pdo, $email)){
             echo "<div class='alert alert-danger'> Email Taken.</div>";
         }
         else{
         $query = "INSERT INTO user (username, pwd ,email, picture) VALUES (:username :pwd :email :picture)";
         // prepare query for execution
         $stmt = $con->prepare($query);
-        $options =[
-            'cost' =12
-        ]
+        $options = [
+            'cost' => 12
+        ];
         $hashedpwd = password_hash($pwd, PASSWORD_BCRYPT,$options);
         // bind the parameters
         $stmt->bindParam(':username', $username);
