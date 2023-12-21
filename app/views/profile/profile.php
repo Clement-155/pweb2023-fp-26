@@ -1,4 +1,20 @@
-<?php include '../../controller/sessionauth.php'?>
+<?php include '../../controller/sessionauth.php';
+include '../../controller/config.php';
+include '../../controller/profilecont.php';
+$id=$_SESSION["user_id"];
+if ($id<=0){
+    header("Location: ./login.php");
+};
+$query = "SELECT * FROM user WHERE id= :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $result = $stmt ->fetch(PDO::FETCH_ASSOC);
+    $picture=$result["picture"];
+    $username=$result["username"];
+    $email=$result["email"];
+    $bio = $result["bio"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,29 +48,8 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About Us</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
                     <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
+                    <li><button class="btn btn-primary" onclick="logout()">Logout</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -67,8 +62,38 @@
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                 <h3>Your Profile</h3>
                 <?php $username = $_SESSION["user_username"];echo "<p>Welcome $username ! </p>"?>
+              
+                <div class="card">
+            <form class="form-card" action="profile.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                    <label for="picture">Profile picture:</label>
+                    <input type="file" name="picture" id="picture" class="form-input" accept=".png, .jpg, .jpeg"  style="display: none;" required onchange="displayimage(this)"><br>
+                <img src="..\..\..\assets\storage\profpic\<?php echo $picture?>"  id="displayprofile" onclick="changeprofile()"; width=200px height=200px>
                 </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input required type="text" class="form-control" name="username" placeholder="<?php echo $username?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input required type="email" class="form-control" name="email" placeholder="<?php echo $email?>">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input required type="password" class="form-control" name="password" placeholder="Change your password">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Your bio</label>
+                    <input required type="text" class="form-control" name="bio" placeholder="<?php echo $bio?>">
+                </div>
+                <div class="form-group">
+                <button type="submit" name="updateprofile" class="btn btn-primary">update profile</button>
+                <button type="submit" name="deleteprofile" class="btn btn-danger">delete profile</button>
+                 </div>
+            </form>
+        </div>
             </div>
+        </div>
         </div>
     </main>
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

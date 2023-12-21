@@ -89,4 +89,92 @@ if(isset($_POST['login'])){
         die('ERROR: ' . $exception->getMessage());
     }
 }
+if(isset($_POST['updateprofile'])){
+    include 'config.php';
+    try{
+        require_once 'registercont.php';
+        require_once 'sessionauth.php';
+        $id =$_SESSION["user_id"];
+        $query = "SELECT * FROM user WHERE id= :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+        $result = $stmt ->fetch(PDO::FETCH_ASSOC);
+        $picture =$_FILES['picture']['name'];
+        $username = $_POST["username"];
+        $email =$_POST["email"];
+        $pwd=$_POST["password"];
+        $bio=$_POST["bio"];
+        if(empty($picture)){
+            $picture = $result["picture"];
+        }else {
+            $storepic= '../../../assets/storage/profpic/' . $picture;
+            move_uploaded_file($_FILES['picture']['tmp_name'], $storepic); 
+        }
+        if(empty($username)){
+            $username = $result["username"];
+        }
+        if(empty($email)){
+            $email = $result["email"];
+        }
+        if(empty($pwd)){
+            $pwd = $result["pwd"];
+        }
+        if(empty($bio)){
+            $bio = $result["bio"];
+        }
+        elseif(!isusrtaken($pdo, $username)){
+            echo "<div class='alert alert-danger'>Username Taken.</div>";
+            die();
+        }
+        elseif(!isemailtaken($pdo, $email)){
+            echo "<div class='alert alert-danger'>Email Taken.</div>";
+            die();
+            }
+        else{
+        $query = "UPDATE user SET username = :username, pwd = :pwd, email = :email, picture = :picture, bio = :bio WHERE id:id";
+        // prepare query for execution
+        $stmt = $pdo->prepare($query);
+        $options = [
+            'cost' => 12
+        ];
+        $hashedpwd = password_hash($pwd, PASSWORD_BCRYPT,$options);
+        // bind the parameters
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':pwd', $hashedpwd);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':picture', $picture);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':bio', $bio);
+        // Execute the query
+        if($stmt->execute()){
+            echo "<div class='alert alert-success'>Update successful.</div>";
+            
+        }else{
+            echo "<div class='alert alert-danger'>Update failed.</div>";
+        }
+        }      
+    }
+    catch(PDOException $exception){
+        die('ERROR: ' . $exception->getMessage());
+    }
+}
+if(isset($_POST['deleteprofile'])){
+    include 'config.php';
+    try{
+        require_once 'sessionauth.php';
+        $id =$_SESSION["user_id"];
+        $query = "DELETE FROM event WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        if($stmt->execute()){
+            echo "<div class='alert alert-success'>Update successful.</div>";
+            
+        }else{
+            echo "<div class='alert alert-danger'>Update failed.</div>";
+        }
+    }
+    catch(PDOException $exception){
+        die('ERROR: ' . $exception->getMessage());
+    }
 ?>

@@ -1,5 +1,6 @@
 <?php include '../../controller/profilecont.php';
-include '../../controller/sessionauth.php';?>
+include '../../controller/sessionauth.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +52,6 @@ include '../../controller/sessionauth.php';?>
                 <button type="submit" name="login" class="btn btn-primary" onclick="location.href='login.php';">Register</button>
             </form>
             <a href="./register.php">Make a new account</a>
-           
         </div>
     </div>
             </div>

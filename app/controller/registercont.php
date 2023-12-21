@@ -30,4 +30,9 @@
             return false;
         }else{ return true;}
     }
+    function isempty2(string $username, string $pwd, string $email,string $bio){
+        if (empty($username)||empty($pwd)||empty($email)||empty($bio)){
+            return false;
+        }else{ return true;}
+    }
 ?>

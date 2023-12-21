@@ -30,3 +30,8 @@ function regenerate_session_id_logged(){
     session_id($sessionid);
     $_SESSION["last_regeneration"] = time();
 } 
+function logout(){
+    unset($_SESSION["user_id"]);
+    unset($_SESSION["user_username"]);
+    header("Location: ../profile/login.php");
+}
