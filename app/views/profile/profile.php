@@ -67,24 +67,24 @@ $query = "SELECT * FROM user WHERE id= :id";
             <form class="form-card" action="profile.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
                     <label for="picture">Profile picture:</label>
-                    <input type="file" name="picture" id="picture" class="form-input" accept=".png, .jpg, .jpeg"  style="display: none;" required onchange="displayimage(this)"><br>
+                    <input type="file" name="picture" id="picture" class="form-input" accept=".png, .jpg, .jpeg"  style="display: none;" onchange="displayimage(this)"><br>
                 <img src="..\..\..\assets\storage\profpic\<?php echo $picture?>"  id="displayprofile" onclick="changeprofile()"; width=200px height=200px>
                 </div>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input required type="text" class="form-control" name="username" placeholder="<?php echo $username?>">
+                    <input type="text" class="form-control" name="username" placeholder="<?php echo $username?>">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input required type="email" class="form-control" name="email" placeholder="<?php echo $email?>">
+                    <input type="email" class="form-control" name="email" placeholder="<?php echo $email?>">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input required type="password" class="form-control" name="password" placeholder="Change your password">
+                    <input type="password" class="form-control" name="password" placeholder="Change your password">
                 </div>
                 <div class="form-group">
                     <label for="bio">Your bio</label>
-                    <input required type="text" class="form-control" name="bio" placeholder="<?php echo $bio?>">
+                    <input type="text" class="form-control" name="bio" placeholder="<?php echo $bio?>">
                 </div>
                 <div class="form-group">
                 <button type="submit" name="updateprofile" class="btn btn-primary">update profile</button>
@@ -102,5 +102,19 @@ $query = "SELECT * FROM user WHERE id= :id";
     <script src="../../../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 </body>
+<script>function changeprofile(){
+    document.querySelector('#picture').click();
+}
+
+function displayimage(e) {
+    if (e.files[0]){
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('#displayprofile').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0])
+    }
+}
+
 </script>
 </html>

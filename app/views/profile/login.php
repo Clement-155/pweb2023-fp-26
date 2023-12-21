@@ -63,19 +63,4 @@ include '../../controller/sessionauth.php';
     <script src="../../../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 </body>
-<script>function changeprofile(){
-    document.querySelector('#picture').click();
-}
-
-function displayimage(e) {
-    if (e.files[0]){
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            document.querySelector('#displayprofile').setAttribute('src', e.target.result);
-        }
-        reader.readAsDataURL(e.files[0])
-    }
-}
-
-</script>
 </html>

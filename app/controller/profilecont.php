@@ -95,35 +95,38 @@ if(isset($_POST['updateprofile'])){
         require_once 'registercont.php';
         require_once 'sessionauth.php';
         $id =$_SESSION["user_id"];
-        $query = "SELECT * FROM user WHERE id= :id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":username", $username);
-        $stmt->execute();
-        $result = $stmt ->fetch(PDO::FETCH_ASSOC);
+        $selectquery = "SELECT * FROM user WHERE id=:id";
+        $stmtselect = $pdo->prepare($selectquery);
+        $stmtselect->bindParam(":username", $username);
+        $stmtselect->execute();
+        $result = $stmtselect ->fetch(PDO::FETCH_ASSOC);
+        print_r($result);
         $picture =$_FILES['picture']['name'];
         $username = $_POST["username"];
         $email =$_POST["email"];
         $pwd=$_POST["password"];
         $bio=$_POST["bio"];
+     
         if(empty($picture)){
             $picture = $result["picture"];
         }else {
             $storepic= '../../../assets/storage/profpic/' . $picture;
             move_uploaded_file($_FILES['picture']['tmp_name'], $storepic); 
         }
-        if(empty($username)){
-            $username = $result["username"];
-        }
-        if(empty($email)){
-            $email = $result["email"];
-        }
-        if(empty($pwd)){
-            $pwd = $result["pwd"];
-        }
-        if(empty($bio)){
-            $bio = $result["bio"];
-        }
-        elseif(!isusrtaken($pdo, $username)){
+         if(empty($username)){
+             $username = $result["username"];
+       }
+         if(empty($email)){
+             $email = $result["email"];
+         }
+         if(empty($pwd)){
+             $pwd = $result["pwd"];
+         }
+         if(empty($bio)){
+             $bio = $result["bio"];
+         }
+        print_r($_POST);
+        if(!isusrtaken($pdo, $username)){
             echo "<div class='alert alert-danger'>Username Taken.</div>";
             die();
         }
@@ -132,9 +135,9 @@ if(isset($_POST['updateprofile'])){
             die();
             }
         else{
-        $query = "UPDATE user SET username = :username, pwd = :pwd, email = :email, picture = :picture, bio = :bio WHERE id:id";
+        $query = "UPDATE user SET username=:username , pwd=:pwd, email=:email, picture=:picture, bio=:bio WHERE id=:id";
         // prepare query for execution
-        $stmt = $pdo->prepare($query);
+
         $options = [
             'cost' => 12
         ];
@@ -177,4 +180,5 @@ if(isset($_POST['deleteprofile'])){
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());
     }
+}
 ?>
