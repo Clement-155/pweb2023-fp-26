@@ -19,8 +19,7 @@ if(isset($_POST['register'])){
             echo "<div class='alert alert-danger'>Username Taken.</div>";
         }
         elseif(!isemailtaken($pdo, $email)){
-            echo "<div class='alert alert-danger'> Email Taken.</div>";
-        }
+
         else{
         $query = "INSERT INTO user (username, pwd ,email, picture) VALUES (:username, :pwd, :email, :picture)";
         // prepare query for execution
