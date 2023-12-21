@@ -1,3 +1,4 @@
+<?php include '../../controller/sessionauth.php'?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +54,7 @@
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+                    <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -65,7 +66,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                 <h3>Your Profile</h3>
-                <p>welcome ![Username]<p>
+                <?php $username = $_SESSION["user_username"];echo "<p>Welcome $username ! </p>"?>
                 </div>
             </div>
         </div>

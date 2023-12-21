@@ -1,3 +1,5 @@
+<?php include '../../controller/profilecont.php';
+include '../../controller/sessionauth.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,39 +26,10 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Amoeba</a></h1>
+                <h1><a href="index.html">Ezvote</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
-
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About Us</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
 
         </div>
     </header><!-- End #header -->
@@ -64,28 +37,21 @@
     <div class="container-fluid px-1 py-5 mx-auto">
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-                <h3>Register</h3>
+                <h3>Login</h3>
     <div class="card">
-            <form class="form-card">
-            <div class="form-group">
-                    <label for="picture">Profile picture:</label>
-                    <input type="file" name="picture" id="picture" class="form-input" accept=".png, .jpg, .jpeg"  style="display: none;" required onchange="displayimage(this)"><br>
-                <img src="..\..\..\assets\storage\download.png"  id="displayprofile" onclick="changeprofile()"; width=200px height=200px>
-                </div>
+            <form class="form-card" action="login.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="username">Email</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your desired username">
-                </div>
-                <div class="form-group">
-                    <label for="email">Username</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter your desired username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
                 </div>
-                <button type="submit" class="btn btn-primary" onclick="location.href='login.php';">Register</button>
+                <button type="submit" name="login" class="btn btn-primary" onclick="location.href='login.php';">Register</button>
             </form>
+            <a href="./register.php">Make a new account</a>
+           
         </div>
     </div>
             </div>
