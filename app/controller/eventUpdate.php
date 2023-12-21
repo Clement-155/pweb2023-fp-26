@@ -4,8 +4,9 @@ if($_POST){
     include './config.php';
     try{
         // insert query
-        $query = "UPDATE event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan WHERE id = :id";
         $id=isset($_POST['id']) ? $_POST['id'] : die('ERROR: Record ID not found.');
+        $query = "UPDATE event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan WHERE id = :id";
+        
         // prepare query for execution
         $stmt = $pdo->prepare($query);
         // posted values
