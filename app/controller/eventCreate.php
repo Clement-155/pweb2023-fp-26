@@ -4,23 +4,37 @@ if($_POST){
     include './config.php';
     try{
         // insert query
-        $query = "INSERT INTO event SET nama_event=:name, description=:description, price=:price, created=:created";
+        $query = "INSERT INTO event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan, jumlah_vote=:jumlah_vote";
+        
+
         // prepare query for execution
-        $stmt = $con->prepare($query);
+        $stmt = $pdo->prepare($query);
         // posted values
-        $name=htmlspecialchars(strip_tags($_POST['name']));
-        $description=htmlspecialchars(strip_tags($_POST['description']));
-        $price=htmlspecialchars(strip_tags($_POST['price']));
+        $nama=htmlspecialchars(strip_tags($_POST['judul']));
+        $tanggal_akhir=htmlspecialchars(strip_tags($_POST['tanggal_akhir']));
+        $deskripsi=htmlspecialchars(strip_tags($_POST['deskripsi']));
+        $pilihan=   (json_encode($_POST['pilihan']));
+        // Init json untuk jumlah voting
+        $jumlah_vote=json_encode(array("1"=>0, "2"=>0, "3"=>0,"4" => 0));
         // bind the parameters
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':nama', $nama);
+        $stmt->bindParam(':tanggal_akhir', $tanggal_akhir);
+
+        $stmt->bindParam(':deskripsi', $deskripsi);
+
+        $stmt->bindParam(':pilihan', $pilihan);
+
+        $stmt->bindParam(':jumlah_vote', $jumlah_vote);
+
+
         // specify when this record was inserted to the database
-        $created=date('Y-m-d H:i:s');
-        $stmt->bindParam(':created', $created);
+        // $created=date('Y-m-d H:i:s');
+        // $stmt->bindParam(':created', $created);
         // Execute the query
         if($stmt->execute()){
-            echo "<div class='alert alert-success'>Record was saved.</div>";
+            header("Location: ../views/event/index.php", true, 301);
+
+            exit();        
         }else{
             echo "<div class='alert alert-danger'>Unable to save record.</div>";
         }

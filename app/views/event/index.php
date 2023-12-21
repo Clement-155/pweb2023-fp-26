@@ -89,6 +89,29 @@
     </section><!-- #hero -->
 
     <main id="main">
+        <!-- PHP START - Get ALL data from database -->
+        <?php
+            // include database connection
+            include '../../controller/config.php';
+            // delete message prompt will be here
+            // select all data
+            $query = "SELECT nama_event, tanggal_akhir, deskripsi, total_vote FROM event ORDER BY tanggal_akhir DESC";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            // this is how to get number of rows returned
+            $num = $stmt->rowCount();
+            // link to create record form
+            //check if more than 0 record found
+            if($num<=0){
+                // data from database will be here
+            }
+            // if no records found
+            else
+            {
+                
+            
+        ?>
+        <!-- PHP END -->
 
         <div class="row py-5">
             <div class="col-lg-10 mx-auto">
@@ -108,15 +131,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
+        <?php 
+             
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    // extract row
+                    // this will make $row['firstname'] to
+                    // just $firstname only
+                    extract($row);
 
-                                    </tr>
- 
+                    echo "<tr>
+                        <td >{$nama_event}</td>
+                        <td >{$tanggal_akhir}</td>
+                        <td >{$deskripsi}</td>
+                        <td >{$total_vote}</td>
+                        <td ></td>
+                    </tr>";
+                }
+            }
+        ?>
                                 </tbody>
                             </table>
                             

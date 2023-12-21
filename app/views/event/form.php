@@ -94,26 +94,26 @@
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                     <h3>Tambah Event Baru</h3>
                     <div class="card">
-                        <form class="form-card" onsubmit="event.preventDefault()">
+                        <form class="form-card" action="../../controller/eventCreate.php" method="post"">
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Judul Event<span class="text-danger"> *</span></label>
-                                     <input type="text" id="judul" name="judul" placeholder="Ulang Tahunku" onblur="validate(1)"> 
+                                    <label class="form-control-label px-3">Judul Event<span class="text-danger" > *</span></label>
+                                     <input type="text" id="judul" name="judul" placeholder="Ulang Tahunku" onblur="validate(1)" required> 
                                     </div>
                                 <div class="form-group col-sm-6 flex-column d-flex"> 
                                     <label class="form-control-label px-3">Tanggal Berakhir<span class="text-danger"> *</span></label>
-                                    <input type="date" id="tanggal_akhir" name="tanggal_akhir"> 
+                                    <input type="datetime-local" id="tanggal_akhir" name="tanggal_akhir" required> 
                                 </div>
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label mt-4">Deskripsi Event</label><span class="text-danger"> *</span>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="deskripsi" rows="3"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="deskripsi" rows="3" required></textarea>
                                 </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 1<span class="text-danger"> *</span></label> <input type="text" id="pilihan_1" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 2<span class="text-danger"> *</span></label> <input type="text" id="pilihan_2" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 1<span class="text-danger"> *</span></label> <input type="text" id="pilihan_1" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 2<span class="text-danger"> *</span></label> <input type="text" id="pilihan_2" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 3</label> <input type="text" id="pilihan_3" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
