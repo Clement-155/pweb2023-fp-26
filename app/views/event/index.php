@@ -117,7 +117,7 @@
             <div class="col-lg-10 mx-auto">
                 <div class="card rounded shadow border-0">
                     <div class="card-body p-5 bg-white rounded">
-                        <div class="table-responsive">
+                        <div class="table-responsive w-80">
                         <a class="btn btn-primary m-4" href="./form.php" role="button">ADD NEW</a>
                             <table id="example" style="width:100%" class="table table-striped table-bordered">
                                 <thead>
@@ -142,7 +142,7 @@
                     echo "<tr>
                         <td >{$nama_event}</td>
                         <td >{$tanggal_akhir}</td>
-                        <td >{$deskripsi}</td>
+                        <td style=\"word-wrap: break-word;min-width: 160px;max-width: 160px;\">{$deskripsi}</td>
                         <td >{$total_vote}</td>
                         <td ></td>
                     </tr>";

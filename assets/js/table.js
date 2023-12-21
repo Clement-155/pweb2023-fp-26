@@ -1,10 +1,16 @@
 $(function() {
     $(document).ready(function() {
-      $('#example').DataTable();
-      
-    });
-    $.extend( $.fn.dataTable.defaults, {
-        responsive: true
-      } );
-  });
+      $('#example').DataTable(
+        {
+            "columns": [
+              null,
+              null,
+              { className: "wrap" },
+              null,
+              null
+            ]
+          }
+      );
+        });
+});
   
