@@ -87,19 +87,20 @@
         </div>
     </section><!-- #hero -->
 
-    <!-- PHP START : Get event data to edit -->
-    
-<?php
+
+    <!-- PHP START : Get event information -->
+
+    <?php
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
-    $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+    $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
     //include database connection
     include '../../controller/config.php';
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT id, nama_event, pilihan FROM event WHERE id = ? LIMIT 0,1";
-        $stmt = $pdo->prepare( $query );
+        $query = "SELECT id, nama_event, deskripsi, pilihan FROM event WHERE id = ? LIMIT 0,1";
+        $stmt = $pdo->prepare($query);
         // this is the first question mark
         $stmt->bindParam(1, $id);
         // execute our query
@@ -108,54 +109,45 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         // values to fill up our form
         $nama_event = $row['nama_event'];
-
+        $deskripsi = $row['deskripsi'];
         $pilihan = json_decode($row['pilihan'], true);
     }
     // show error
-    catch(PDOException $exception){
+    catch (PDOException $exception) {
         die('ERROR: ' . $exception->getMessage());
     }
-?>
+    ?>
     <!-- PHP END -->
+
     <main id="main">
 
         <div class="container-fluid px-1 py-5 mx-auto">
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-                    <h3>Edit Event</h3>
+                    <h3>
+                        <?php echo $nama_event ?>
+                    </h3>
+                    <p class="lead">
+                        <?php echo $deskripsi ?>
+                    </p>
                     <div class="card">
-                        <form class="form-card" action="../../controller/eventUpdate.php" method="post"">
-                            <input value=<?php echo $id ?> type="text" name="id" hidden required>
-                            <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Judul Event<span class="text-danger" > *</span></label>
-                                     <input value=<?php echo $nama_event ?>  type="text" id="judul" name="judul" placeholder="Ulang Tahunku" onblur="validate(1)" required> 
-                                    </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Tanggal Berakhir<span class="text-danger"> *</span></label>
-                                    <input type="datetime-local" id="tanggal_akhir" name="tanggal_akhir" required> 
-                                </div>
+                        <form id="voting" class="form-card" action="../../controller/votingSubmit.php" method="post"">
+                            <input value=<?php echo $id ?> type=" text" name="id" hidden required>
+                            <div class="d-flex flex-column mb-3 align-items-center">
+                                <?php
+                                foreach ($pilihan as $index => $opt) {
+                                    if ($opt != "" || $opt != null) {
+                                ?>
+                                        <input type="radio" class="btn-check" name="vote" id="opt<?php echo $index ?>" autocomplete="off" value="<?php echo $index ?>" required>
+                                        <label class="btn btn-success m-3" style="width:30%" for="opt<?php echo $index ?>"><?php echo $opt ?></label>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </div>
-                            <div class="row justify-content-between text-left">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label mt-4">Deskripsi Event</label><span class="text-danger"> *</span>
-                                    <textarea maxlength="1000" class="form-control" id="exampleFormControlTextarea1" name="deskripsi" rows="3" required></textarea>
-                                </div>
-                            </div>
-                            <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 1<span class="text-danger"> *</span></label> <input value=<?php echo $pilihan[0] ?> type="text" id="pilihan_1" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 2<span class="text-danger"> *</span></label> <input value=<?php echo $pilihan[1] ?> type="text" id="pilihan_2" name="pilihan[]" placeholder="" onblur="validate(5)" required> </div>
-                            </div>
-                            <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 3</label> <input value=<?php echo $pilihan[2] ? $pilihan[2] : "-" ?> type="text" id="pilihan_3" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Pilihan 4</label> <input value=<?php echo $pilihan[2] ? $pilihan[3] : "-" ?> type="text" id="pilihan_4" name="pilihan[]" placeholder="" onblur="validate(5)"> </div>
-                            </div>
-
-                            <div class="row justify-content-end">
-                                <div class="form-group col-sm-4">
-                                     <button type="submit" class="btn btn-primary">UPDATE</button> 
-                                     <a class="btn btn-secondary" href="./index.php" role="button">Back</a> 
-                                </div>
+                            <div class="d-flex justify-content-evenly align-items-center">
+                                <button type="submit" style="height:50%" class="btn btn-primary">VOTE</button>
+                                <a class="btn btn-secondary" style="height:fit-content" href="./index.php" role="button">Back</a>
                             </div>
                         </form>
                     </div>
@@ -176,7 +168,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-one-page-bootstrap-template-amoeba/ -->
-                    Dosen: Imam Kuswardayan, S.Kom, M.T
+                Dosen: Imam Kuswardayan, S.Kom, M.T
             </div>
         </div>
     </footer><!-- End #footer -->

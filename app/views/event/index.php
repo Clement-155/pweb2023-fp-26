@@ -145,14 +145,15 @@
                     extract($row);
 
                     echo "<tr>
-                        <td style=\"word-wrap: break-word;min-width: 10vw;max-width: 10vw;\">{$nama_event}</td>
+                        <td style=\"word-wrap: break-word;min-width: 10vw;max-width: 10vw; font-weight: bold;\">{$nama_event}</td>
                         <td >{$tanggal_akhir}</td>
                         <td style=\"word-wrap: break-word;min-width: 20vw;max-width: 15vw;\">{$deskripsi}</td>
                         <td >{$total_vote}</td>
                         <td >
-                            <div class=\"row row-cols-1\">
-                                <a class=\"btn btn-warning m-4 w-50\" href=\"./updateForm.php?id={$id}\" role=\"button\">EDIT</a>
-                                <a class=\"btn btn-danger m-4 w-50\" href=\"javascript:delete_event({$id})\" role=\"button\">DELETE</a>
+                            <div class=\"row row-cols-1 justify-content-center\">
+                                <a class=\"btn btn-warning ms-4 w-50\" href=\"./updateForm.php?id={$id}\" role=\"button\">EDIT</a>
+                                <a class=\"btn btn-danger ms-4 w-50\" href=\"javascript:delete_event({$id})\" role=\"button\">DELETE</a>
+                                <a class=\"btn btn-success ms-4 w-50\" href=\"./votingView.php?id={$id}\" role=\"button\">VOTE</a>
                             </div>
                         </td>
                     </tr>";
