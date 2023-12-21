@@ -97,16 +97,17 @@ if(isset($_POST['updateprofile'])){
         $id =$_SESSION["user_id"];
         $selectquery = "SELECT * FROM user WHERE id=:id";
         $stmtselect = $pdo->prepare($selectquery);
-        $stmtselect->bindParam(":username", $username);
+        $stmtselect->bindParam(":id", $id);
         $stmtselect->execute();
         $result = $stmtselect ->fetch(PDO::FETCH_ASSOC);
-        print_r($result);
         $picture =$_FILES['picture']['name'];
         $username = $_POST["username"];
         $email =$_POST["email"];
         $pwd=$_POST["password"];
         $bio=$_POST["bio"];
-     
+        $options = [
+            'cost' => 12
+        ];
         if(empty($picture)){
             $picture = $result["picture"];
         }else {
@@ -121,42 +122,35 @@ if(isset($_POST['updateprofile'])){
          }
          if(empty($pwd)){
              $pwd = $result["pwd"];
+         }else{
+            $pwd = password_hash($pwd, PASSWORD_BCRYPT,$options);
          }
          if(empty($bio)){
              $bio = $result["bio"];
          }
-        print_r($_POST);
-        if(!isusrtaken($pdo, $username)){
-            echo "<div class='alert alert-danger'>Username Taken.</div>";
-            die();
-        }
-        elseif(!isemailtaken($pdo, $email)){
-            echo "<div class='alert alert-danger'>Email Taken.</div>";
-            die();
-            }
-        else{
         $query = "UPDATE user SET username=:username , pwd=:pwd, email=:email, picture=:picture, bio=:bio WHERE id=:id";
         // prepare query for execution
+        $stmt = $pdo->prepare($query);
+       
+        unset($_SESSION["user_username"]);
 
-        $options = [
-            'cost' => 12
-        ];
-        $hashedpwd = password_hash($pwd, PASSWORD_BCRYPT,$options);
         // bind the parameters
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':pwd', $hashedpwd);
+        $stmt->bindParam(':pwd', $pwd);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':picture', $picture);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':bio', $bio);
+        
         // Execute the query
         if($stmt->execute()){
             echo "<div class='alert alert-success'>Update successful.</div>";
             
         }else{
             echo "<div class='alert alert-danger'>Update failed.</div>";
-        }
         }      
+        $_SESSION["user_username"] = htmlspecialchars($username);
+      
     }
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());
@@ -167,14 +161,16 @@ if(isset($_POST['deleteprofile'])){
     try{
         require_once 'sessionauth.php';
         $id =$_SESSION["user_id"];
-        $query = "DELETE FROM event WHERE id = :id";
+        $query = "DELETE FROM user WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
         if($stmt->execute()){
-            echo "<div class='alert alert-success'>Update successful.</div>";
+            unset($_SESSION["user_id"]);
+            unset($_SESSION["user_username"]);
+            header("Location: ../views/profile/login.php");
             
         }else{
-            echo "<div class='alert alert-danger'>Update failed.</div>";
+            echo "<div class='alert alert-danger'>Delete failed.</div>";
         }
     }
     catch(PDOException $exception){
