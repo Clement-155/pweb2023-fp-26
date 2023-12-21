@@ -12,8 +12,7 @@ if ($_SESSION["user_id"]<=0){
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>Amoeba Bootstrap Template - Home</title>
+    <title>EZVote - Home</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -81,8 +80,7 @@ if ($_SESSION["user_id"]<=0){
     <!-- ======= Hero Section ======= -->
     <section id="hero">
         <div class="hero-container">
-            <h1>Welcome to Amoeba</h1>
-            <h2>We are team of talented designers making websites with Bootstrap</h2>
+        <h1>EZVote</h1>
         </div>
     </section><!-- #hero -->
 
