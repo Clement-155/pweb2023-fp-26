@@ -1,4 +1,11 @@
 <?php
+require_once 'sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../views/profile/login.php");
+}
+?>
+
+<?php
 $host = 'localhost';
 $dbname = 'ezvote';
 $username = 'root';

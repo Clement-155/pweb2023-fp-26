@@ -1,10 +1,16 @@
 <?php
+require_once 'sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../views/profile/login.php");
+}
+?>
+<?php
 if($_POST){
     // include database connection
     include './config.php';
     try{
         // insert query
-        $query = "INSERT INTO event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan, jumlah_vote=:jumlah_vote";
+        $query = "INSERT INTO event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan, jumlah_vote=:jumlah_vote, id_user=:id_user";
         
 
         // prepare query for execution
@@ -25,7 +31,7 @@ if($_POST){
         $stmt->bindParam(':pilihan', $pilihan);
 
         $stmt->bindParam(':jumlah_vote', $jumlah_vote);
-
+        $stmt->bindParam(':id_user', $_SESSION["user_id"]);
 
         // specify when this record was inserted to the database
         // $created=date('Y-m-d H:i:s');

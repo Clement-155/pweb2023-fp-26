@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<?php
+require_once '../../controller/sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../profile/login.php");
+}
+    
+    //include database connection
+    include '../../controller/config.php';
+    $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+    //Check if user is owner of file
+    $user_id = $_SESSION["user_id"];
+    $query = "SELECT id_user FROM event WHERE id = ?";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(1, $id);
+    // execute our query
+    $stmt->execute();
+    // store retrieved row to a variable
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $id_owner = $row['id_user'];
+
+    $id_owner == $user_id ? : die('ERROR : INVALID USER');
+
+?>
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -42,36 +69,15 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.php">Amoeba</a></h1>
+            <h1><a href="index.php">EZVote</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About Us</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+                <li><a class="nav-link scrollto" href="../profile/profile.php">Profile</a></li>
+                    <li><a class="btn btn-primary" href="../../controller/sessionauth.php?isLogout=1">Logout</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -92,9 +98,10 @@
 <?php
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
-    $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
-    //include database connection
-    include '../../controller/config.php';
+    
+    
+
+    die(var_dump($id_owner == $user_id));
     // read current record's data
     try {
         // prepare select query

@@ -27,7 +27,7 @@ include '../../controller/sessionauth.php';
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Ezvote</a></h1>
+            <h1><a href="../event/index.php">EZVote</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -49,18 +49,48 @@ include '../../controller/sessionauth.php';
                     <label for="password">Password</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
                 </div>
-                <button type="submit" name="login" class="btn btn-primary" onclick="location.href='login.php';">Register</button>
+                <button type="submit" name="login" class="btn btn-primary" onclick="location.href;">Login</button>
             </form>
             <a href="./register.php">Make a new account</a>
         </div>
     </div>
             </div>
         </div>
-    </main>
+    </main>    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                <strong><span>Kuliah Pemrograman Web Jurusan Teknik Informatika ITS (2023)</span></strong>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-one-page-bootstrap-template-amoeba/ -->
+                Dosen: Imam Kuswardayan, S.Kom, M.T
+            </div>
+        </div>
+    </footer><!-- End #footer -->
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="../../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="../../../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 </body>
+
+<script>function changeprofile(){
+    document.querySelector('#picture').click();
+}
+
+function displayimage(e) {
+    if (e.files[0]){
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('#displayprofile').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0])
+    }
+}
+
+</script>
 </html>

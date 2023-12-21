@@ -1,10 +1,18 @@
 <?php
+require_once 'sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../views/profile/login.php");
+}
+?>
+
+<?php
 if($_POST){
     // include database connection
     include './config.php';
     try{
         // insert query
-        $id=isset($_POST['id']) ? $_POST['id'] : die('ERROR: Record ID not found.');
+
+
         $query = "UPDATE event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan WHERE id = :id";
         
         // prepare query for execution

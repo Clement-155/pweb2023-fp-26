@@ -16,7 +16,7 @@ function ispasswrong($pwd, $hashedpwd){
     }else{ return false;}
 }
 function getusername($pdo, $username){
-    $query = "SELECT * FROM user WHERE username= :username";
+    $query = "SELECT * FROM user WHERE username=:username";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":username", $username);
     $stmt->execute();
