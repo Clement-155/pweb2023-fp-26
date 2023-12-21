@@ -41,7 +41,7 @@ $query = "SELECT * FROM user WHERE id= :id";
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Amoeba</a></h1>
+            <h1><a href="index.php">EZVote</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -49,7 +49,7 @@ $query = "SELECT * FROM user WHERE id= :id";
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
-                    <li><button class="btn btn-primary" onclick="logout()">Logout</a></li>
+                    <li><a class="btn btn-primary" href="../../controller/sessionauth.php?isLogout=1">Logout</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -95,12 +95,27 @@ $query = "SELECT * FROM user WHERE id= :id";
             </div>
         </div>
         </div>
-    </main>
+    </main>    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                <strong><span>Kuliah Pemrograman Web Jurusan Teknik Informatika ITS (2023)</span></strong>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-one-page-bootstrap-template-amoeba/ -->
+                Dosen: Imam Kuswardayan, S.Kom, M.T
+            </div>
+        </div>
+    </footer><!-- End #footer -->
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="../../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="../../../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 </body>
+
 </script>
 </html>

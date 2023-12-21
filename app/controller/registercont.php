@@ -11,7 +11,7 @@
         }else{ return true;}
     }
     function isusrtaken($pdo, $username){
-        $query = "SELECT username FROM user WHERE username= :username";
+        $query = "SELECT username FROM user WHERE username=:username";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":username", $username);
         $stmt->execute();
@@ -21,7 +21,7 @@
         }else{ return true;}
     }
     function isemailtaken($pdo, $email){
-        $query = "SELECT username FROM user WHERE email= :email";
+        $query = "SELECT username FROM user WHERE email=:email";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":email", $email);
         $stmt->execute();

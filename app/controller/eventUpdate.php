@@ -1,10 +1,31 @@
 <?php
+require_once 'sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../views/profile/login.php");
+}
+?>
+
+<?php
 if($_POST){
     // include database connection
     include './config.php';
     try{
         // insert query
         $id=isset($_POST['id']) ? $_POST['id'] : die('ERROR: Record ID not found.');
+        //Check if user is owner of file
+        $user_id = $_SESSION["user_id"];
+        $query = "SELECT id_user FROM event WHERE id = ?";
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(1, $id);
+        // execute our query
+        $stmt->execute();
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id_owner = $row['id_user'];
+
+        $id_owner == $user_id ? : die('ERROR : INVALID USER');
+
         $query = "UPDATE event SET nama_event=:nama, tanggal_akhir=:tanggal_akhir, deskripsi=:deskripsi, pilihan=:pilihan WHERE id = :id";
         
         // prepare query for execution

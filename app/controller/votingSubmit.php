@@ -1,4 +1,11 @@
 <?php
+require_once 'sessionauth.php';
+if ($_SESSION["user_id"]<=0){
+    header("Location: ../views/profile/login.php");
+}
+?>
+
+<?php
         if ($_POST){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
@@ -34,6 +41,12 @@
             $stmt->bindParam(':jumlah_vote', $jumlah_vote);
             // execute our query
             $stmt->execute();
+
+            // Log voting in table
+            $query = "INSERT INTO event_user SET event_id=:event_id, user_id=:user_id";
+            $stmt->bindParam(':event_id', $id);
+            $stmt->bindParam(':user_id', $_SESSION["user_id"]);
+
             if($stmt->execute()){
                 header("Location: ../views/event/index.php", true, 301);
     

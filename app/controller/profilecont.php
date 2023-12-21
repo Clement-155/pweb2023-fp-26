@@ -177,4 +177,5 @@ if(isset($_POST['deleteprofile'])){
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());
     }
+}
 ?>
