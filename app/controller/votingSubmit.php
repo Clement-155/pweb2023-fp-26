@@ -15,6 +15,18 @@ if ($_SESSION["user_id"]<=0){
         include './config.php';
         // read current record's data
         try {
+            //CHECK IF USER ALREADY VOTED
+            $query = "SELECT * FROM event_user WHERE event_id = :id AND user_id = :user";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':user', $_SESSION["user_id"]);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row)
+            {
+                die("ERROR : You've already voted here!!!");
+            }
+
             // prepare select query
             $query = "SELECT jumlah_vote, total_vote FROM event WHERE id = ? LIMIT 0,1";
             $stmt = $pdo->prepare($query);
@@ -43,8 +55,10 @@ if ($_SESSION["user_id"]<=0){
             $stmt->execute();
 
             // Log voting in table
-
-            
+            $query = "INSERT INTO event_user SET event_id=:event_id, user_id=:user_id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':event_id', $id);
+            $stmt->bindParam(':user_id', $_SESSION["user_id"]);
             
             if($stmt->execute()){
                 header("Location: ../views/event/index.php", true, 301);

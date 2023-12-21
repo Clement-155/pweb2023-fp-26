@@ -49,7 +49,7 @@ include '../../controller/sessionauth.php';
                     <label for="password">Password</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
                 </div>
-                <button type="submit" name="login" class="btn btn-primary" onclick="location.href='login.php';">Register</button>
+                <button type="submit" name="login" class="btn btn-primary" onclick="location.href;">Login</button>
             </form>
             <a href="./register.php">Make a new account</a>
         </div>

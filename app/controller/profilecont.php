@@ -65,7 +65,7 @@ if(isset($_POST['login'])){
             die();
         }
         $result = getusername($pdo, $username);
-        print_r($result);
+
         if(isusrwrong($result)){
             echo "<div class='alert alert-danger'>Username doesnt exist.</div>";
 
